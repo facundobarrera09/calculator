@@ -11,13 +11,26 @@ let operationPerformed = false;
 
 function queueNumber(number)
 {
-    queuedNumber = Number.parseInt(
+    queuedNumber = Number.parseFloat(
         `${(queuedNumber === undefined) ? 0 : queuedNumber}${number}`);
 
     if (operationPerformed)
         updateDisplay(queuedNumber, operation);
     else
         updateDisplay(queuedNumber);
+}
+
+function deleteNumber()
+{
+    if (operationPerformed) return;
+
+    let queuedNumberArray = `${queuedNumber}`.split('');
+    queuedNumberArray.splice(queuedNumberArray.length-1,1);
+    queuedNumber = Number.parseFloat(queuedNumberArray.join(''));
+
+    if (Number.isNaN(queuedNumber) === true) queuedNumber = undefined;
+
+    updateDisplay(queuedNumber, operation);
 }
 
 function parseNumber()
@@ -44,7 +57,7 @@ function parseNumber()
 
 function queueOperator(operator)
 {
-    performOperation();
+    if (!operationPerformed) performOperation();
     operation = operator;
     updateDisplay(undefined, operator);
 }
@@ -85,7 +98,9 @@ function resetCalculator()
 
 function updateDisplay(number, operator)
 {
-    if (number !== undefined) numbersDisplay.textContent = number;
+    numbersDisplay.textContent = (number !== undefined) ? number :
+                                 (firstNumber !== undefined) ? firstNumber :
+                                 0;
     operatorDisplay.textContent = (operator !== undefined) ? operator : '';
 }
 
@@ -98,7 +113,8 @@ const CALC_BUTTONS =  [[['AC', 'Delete'], ['DEL', 'Backspace']],
                                 [['=', '=']]];
 
 const CALC_NUMBERS = ('0123456789').split('');
-const CALC_OPERATORS = ('+-*/=').split('');
+const CALC_OPERATORS = ('+-*/').split('');
+const CALC_EQUALS = ['='];
 const CALC_DELETE = ['DEL', 'DELETE'];
 const CALC_AC = ['AC', 'CLEAR'];
                         
@@ -140,8 +156,10 @@ function buttonPressed(e)
         queueNumber(Number.parseFloat(key));
     else if (CALC_OPERATORS.some(op => (key === op) ? true : false))
         queueOperator(key);
+    else if (CALC_EQUALS.some(eq => (key === eq) ? true : false))
+        performOperation();
     else if (CALC_AC.some(ac => (key === ac) ? true : false))
         resetCalculator();
     else if (CALC_DELETE.some(del => (key === del) ? true : false))
-        console.log('not implemented');
+        deleteNumber();
 }
