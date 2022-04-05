@@ -40,6 +40,9 @@ body {
     text-align: right;
 
     background-color: white;
+
+    display: flex;
+    justify-content: space-between;
 }
 
 .buttons {
