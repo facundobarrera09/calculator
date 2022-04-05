@@ -76,8 +76,18 @@ function performOperation()
                 ((secondNumber !== 0) ? firstNumber / secondNumber : 'math error') : 
             'syntax error';
 
-    firstNumber = total;
-    operationPerformed = true;
+
+    if (isNaN(total)) 
+    {
+        let aux = total;
+        resetCalculator();
+        total = aux;
+    }
+    else
+    {
+        firstNumber = total;
+        operationPerformed = true;
+    }
 
     updateDisplay(total, '=');
 }
