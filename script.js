@@ -8,11 +8,19 @@ let queuedNumber = undefined;
 let firstNumber = undefined, secondNumber = undefined;
 let operation = undefined;
 let operationPerformed = false;
+let hasFloatingPoint = false;
 
 function queueNumber(number)
 {
-    queuedNumber = Number.parseFloat(
-        `${(queuedNumber === undefined) ? 0 : queuedNumber}${number}`);
+    if (number === '.') 
+        if (hasFloatingPoint)
+            return;
+        else 
+            hasFloatingPoint = true;
+
+    queuedNumber = `${(queuedNumber === undefined) ? 0 : queuedNumber}${number}`;
+
+    if (number !== '.') queuedNumber = Number.parseFloat(queuedNumber);
 
     if (operationPerformed)
         updateDisplay(queuedNumber, operation);
@@ -35,16 +43,10 @@ function deleteNumber()
 
 function parseNumber()
 {
-    let aux;
-
     if (queuedNumber !== undefined)
     {
-        /* if (operationPerformed && )
-        {
-            aux = queuedNumber;
-            resetCalculator();
-            queuedNumber = aux;
-        } */
+        queuedNumber = Number.parseFloat(queuedNumber);
+        hasFloatingPoint = false;
 
         if (firstNumber === undefined)
             firstNumber = queuedNumber;
@@ -77,6 +79,7 @@ function performOperation()
                 ((secondNumber !== 0) ? firstNumber / secondNumber : 'math error') : 
             'syntax error';
 
+    total = Number.parseFloat(total.toFixed(4));
 
     if (isNaN(total)) 
     {
@@ -101,6 +104,7 @@ function resetCalculator()
     secondNumber = undefined;
     operation = undefined;
     operationPerformed = false;
+    hasFloatingPoint = false;
 
     updateDisplay('0', '');
 }
@@ -120,10 +124,10 @@ const CALC_BUTTONS =  [[['AC', 'Delete'], ['DEL', 'Backspace']],
                                 [['7', '7'], ['8', '8'], ['9', '9'], ['-', '-']],
                                 [['4', '4'], ['5', '5'], ['6', '6'], ['+', '+']],
                                 [['1', '1'], ['2', '2'], ['3', '3'], ['*', '*']],
-                                [ '', ['0', '0'] , '', ['/', '/']],
+                                [ '', ['0', '0'] , ['.', '.'], ['/', '/']],
                                 [['=', '=']]];
 
-const CALC_NUMBERS = ('0123456789').split('');
+const CALC_NUMBERS = ('0123456789.').split('');
 const CALC_OPERATORS = ('+-*/').split('');
 const CALC_EQUALS = ['=', 'Enter'];
 const CALC_DELETE = ['DEL', 'Backspace'];
@@ -169,7 +173,7 @@ function buttonPressed(e)
 
     // Find what button was pressed
     if (CALC_NUMBERS.some(num => (key === num) ? true : false))
-        queueNumber(Number.parseFloat(key));
+        queueNumber(key);
     else if (CALC_OPERATORS.some(op => (key === op) ? true : false))
         queueOperator(key);
     else if (CALC_EQUALS.some(eq => (key === eq) ? true : false))
