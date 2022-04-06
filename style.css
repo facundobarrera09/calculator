@@ -1,6 +1,12 @@
+* {
+    font-family: 'Roboto', 'Courier New', Courier, monospace;
+}
+
 body {
     height: 100vh;
     margin: 0;
+
+    background-color:rgb(160, 226, 229);
 
     display: flex;
     flex-direction: column;
@@ -21,8 +27,8 @@ body {
     min-width: 20rem;
     min-height: 30rem;
 
-    border: 0.1rem solid rgb(71, 71, 71);
-    border-radius: 0.2rem;
+    border: 0.1rem solid rgb(42, 42, 42);
+    border-radius: 0.3rem;
 
     background-color: grey;
 
@@ -33,13 +39,13 @@ body {
 .display {
     margin: 1rem;
     padding: 1rem 2rem;
-    border: 0.2rem solid rgb(191, 191, 191);
+    border: 0.1rem solid rgb(42, 42, 42);
     border-radius: inherit;
 
     font-size: xx-large;
     text-align: right;
 
-    background-color: white;
+    background-color:rgb(195, 246, 93);
 
     display: flex;
     justify-content: space-between;
@@ -65,10 +71,15 @@ body {
     height: 3.5rem;
 
     margin: 0 0.5rem;
+    border: 0.1rem solid rgb(42, 42, 42);
+    border-radius: 0.3rem;
 
-    background-color: white;
+    font-size: medium;
+
+    background-color: rgb(255, 112, 87);
 }
 
 footer {
     margin-top: auto;
+    padding: 0.5em 0;
 }

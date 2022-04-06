@@ -150,6 +150,9 @@ for (let x = 0; x < calculatorButtons.length; x++)
         button.textContent = calculatorButtons[x][y].name;
         button.setAttribute('data-key', calculatorButtons[x][y].key);
 
+        if (calculatorButtons[x][y].name === 'AC' || calculatorButtons[x][y].name === 'DEL')
+            button.style['background-color'] = 'aquamarine';
+
         if (calculatorButtons[x][y].key === undefined) button.style['visibility'] = 'hidden'; 
 
         line.appendChild(button);
