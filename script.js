@@ -32,9 +32,11 @@ function deleteNumber()
 {
     if (operationPerformed) return;
 
-    let queuedNumberArray = `${queuedNumber}`.split('');
-    queuedNumberArray.splice(queuedNumberArray.length-1,1);
-    queuedNumber = Number.parseFloat(queuedNumberArray.join(''));
+    const queuedNumberArray = `${queuedNumber}`.split('');
+    const removed = queuedNumberArray.splice(queuedNumberArray.length-1,1);
+    queuedNumber = queuedNumberArray.join('');
+
+    if (removed[0] === '.') hasFloatingPoint = false;
 
     if (Number.isNaN(queuedNumber) === true) queuedNumber = undefined;
 
@@ -185,6 +187,4 @@ function buttonPressed(e)
         resetCalculator();
     else if (CALC_DELETE.some(del => (key === del) ? true : false))
         deleteNumber();
-
-    console.log(e.type);
 }
