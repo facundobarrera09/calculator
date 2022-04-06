@@ -20,7 +20,7 @@ function queueNumber(number)
 
     queuedNumber = `${(queuedNumber === undefined) ? 0 : queuedNumber}${number}`;
 
-    if (number !== '.') queuedNumber = Number.parseFloat(queuedNumber);
+    if (number !== '.' && !hasFloatingPoint) queuedNumber = Number.parseFloat(queuedNumber);
 
     if (operationPerformed)
         updateDisplay(queuedNumber, operation);
@@ -169,7 +169,7 @@ function buttonPressed(e)
 {
     // Get pressed key from window or keyboard
     let key;
-    if (e.target.tagName === 'BUTTON')
+    if (e.target.tagName === 'BUTTON' && e.type === 'click')
         key = e.target.textContent;
     else
         key = e.key;
@@ -185,4 +185,6 @@ function buttonPressed(e)
         resetCalculator();
     else if (CALC_DELETE.some(del => (key === del) ? true : false))
         deleteNumber();
+
+    console.log(e.type);
 }
