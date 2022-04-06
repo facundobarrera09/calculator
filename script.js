@@ -58,6 +58,7 @@ function parseNumber()
 function queueOperator(operator)
 {
     if (!operationPerformed) performOperation();
+    else operationPerformed = false;
     operation = operator;
     updateDisplay(undefined, operator);
 }
