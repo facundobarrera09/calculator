@@ -125,9 +125,9 @@ const CALC_BUTTONS =  [[['AC', 'Delete'], ['DEL', 'Backspace']],
 
 const CALC_NUMBERS = ('0123456789').split('');
 const CALC_OPERATORS = ('+-*/').split('');
-const CALC_EQUALS = ['='];
-const CALC_DELETE = ['DEL', 'DELETE'];
-const CALC_AC = ['AC', 'CLEAR'];
+const CALC_EQUALS = ['=', 'Enter'];
+const CALC_DELETE = ['DEL', 'Backspace'];
+const CALC_AC = ['AC', 'Delete'];
                         
 const calculatorButtons = CALC_BUTTONS.map
                             (line => line.map
@@ -156,13 +156,18 @@ for (let x = 0; x < calculatorButtons.length; x++)
 
 // Buttons event listeners
 window.addEventListener('click', buttonPressed);
+window.addEventListener('keydown', buttonPressed);
 
 function buttonPressed(e)
 {
-    if (e.target.tagName !== 'BUTTON') return;
+    // Get pressed key from window or keyboard
+    let key;
+    if (e.target.tagName === 'BUTTON')
+        key = e.target.textContent;
+    else
+        key = e.key;
 
-    let key = e.target.textContent;
-
+    // Find what button was pressed
     if (CALC_NUMBERS.some(num => (key === num) ? true : false))
         queueNumber(Number.parseFloat(key));
     else if (CALC_OPERATORS.some(op => (key === op) ? true : false))
